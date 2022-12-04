@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="estudiantil_profesor_view_tree">
+      <field name="name">Profesor</field>
+      <field name="model">estudiantil.profesor</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cedula"/>
+          <field name="nombre"/>
+          <field name="edad"/>
+          <field name="estatura" optional="hide"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record id="estudiantil_profesor_view_form" model="ir.ui.view">
+      <field name="name">Profesor</field>
+      <field name="model">estudiantil.profesor</field>
+      <field name="arch" type="xml">
+        <form >
+          <sheet>
+            <group col="3">
+              <group colspan="2">
+                <field name="nombre"/>               
+              </group>
+              <group>
+                <field name="cedula"/>                
+              </group>
+              <group>
+                <field name="estatura"/>
+              </group>
+              <group>
+                <field name="edad"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="estudiantil_profesor_action">
+      <field name="name">Profesor</field>
+      <field name="res_model">estudiantil.profesor</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Estudiantil" id="estudiantil_menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Listado" id="estudiantil_listado" parent="estudiantil_menu_root"/>
+
+
+    <!-- actions -->
+
+    <menuitem name="Profesor" id="estudiantil_profesor" parent="estudiantil_listado" action="estudiantil_profesor_action" sequence="2"/>
+
+
+
+
+  </data>
+</odoo>

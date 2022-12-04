@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="estudiantil_alumno_view_tree">
+      <field name="name">Alumno</field>
+      <field name="model">estudiantil.alumno</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cedula"/>
+          <field name="nombre"/>
+          <field name="edad"/>
+         
+        </tree>
+      </field>
+    </record>
+
+
+    <record id="estudiantil_alumno_view_form" model="ir.ui.view">
+      <field name="name">Alumno</field>
+      <field name="model">estudiantil.alumno</field>
+      <field name="arch" type="xml">
+        <form >
+          <sheet>
+            <group >
+              <group colspan="2">
+                <field name="nombre"/>               
+              </group>
+              <group>
+                <field name="cedula"/>                
+              </group>             
+              <group>
+                <field name="edad"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="estudiantil_alumno_action">
+      <field name="name">Alumno</field>
+      <field name="res_model">estudiantil.alumno</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Alumno" id="estudiantil_alumno" parent="estudiantil_listado" action="estudiantil_alumno_action" sequence="1"/>
+
+  </data>
+</odoo>

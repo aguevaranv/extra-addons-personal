@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+  <record model="ir.ui.view" id="tienda_producto_view_tree">
+      <field name="name">Producto</field>
+      <field name="model">tienda.producto</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="stock"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record id="tienda_producto_view_form" model="ir.ui.view">
+      <field name="name">Producto</field>
+      <field name="model">tienda.producto</field>
+      <field name="arch" type="xml">
+        <form >
+          <sheet>
+            <group >
+              <group colspan="2">
+                <field name="nombre"/>               
+              </group>           
+              <group>
+                <field name="stock"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tienda_producto_action">
+      <field name="name">Producto</field>
+      <field name="res_model">tienda.producto</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Producto" id="tienda_producto" action="tienda_producto_action" sequence="1"/>
+    
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="tienda.action_window">
+      <field name="name">tienda window</field>
+      <field name="res_model">tienda.tienda</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="tienda.action_server">
+      <field name="name">tienda server</field>
+      <field name="model_id" ref="model_tienda_tienda"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="tienda" id="tienda.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="tienda.menu_1" parent="tienda.menu_root"/>
+    <menuitem name="Menu 2" id="tienda.menu_2" parent="tienda.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="tienda.menu_1_list" parent="tienda.menu_1"
+              action="tienda.action_window"/>
+    <menuitem name="Server to list" id="tienda" parent="tienda.menu_2"
+              action="tienda.action_server"/>
+-->
+  </data>
+</odoo>
