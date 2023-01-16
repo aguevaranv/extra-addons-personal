@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="category_director" model="res.partner.category">
-        <field name="name">Director</field>
+        <field name="name">Director</field>  <!--ingreso un registro en el modelo categoria de contactos-->
     </record>
     <record id="category_actor" model="res.partner.category">
         <field name="name">Actor</field>

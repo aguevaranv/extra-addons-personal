@@ -62,7 +62,7 @@ class Presupuesto(models.Model):
         string='Actores'
     )
 
-    categoria_actor_id = fields.Many2one(
+    categoria_actor_id = fields. (
         comodel_name='res.partner.category',
         string='Categoria Actor',
         default=lambda self: self.env.ref('peliculas.category_actor')
@@ -96,7 +96,7 @@ class Presupuesto(models.Model):
 
     def write(self, variables):
         logger.info('******** variables: {0}'.format(variables))
-        if 'clasificacion' in variables:
+        if 'clasificacion' in variables: #si clasificacion esta dentro de variables
             raise UserError('La clasificacion no se puede editar')
         return super(Presupuesto, self).write(variables)
 
