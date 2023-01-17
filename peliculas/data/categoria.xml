@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
+    <!-- Ingresa datos en una tabla para utilizar los id y enlazarlos con el id de cada record -->
     <record id="category_director" model="res.partner.category">
-        <field name="name">Director</field>  <!--ingreso un registro en el modelo categoria de contactos-->
+        <field name="name">Director</field>
     </record>
     <record id="category_actor" model="res.partner.category">
         <field name="name">Actor</field>

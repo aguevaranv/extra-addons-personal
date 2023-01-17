@@ -33,7 +33,7 @@ class Presupuesto(models.Model):
         comodel_name='res.partner.category',
         string='Categoria Director',
         # segunda version
-        default=lambda self: self.env.ref('peliculas.category_director')
+        default=lambda self: self.env.ref('peliculas.category_director') #hace referencia al id del record en /data/categoria.xml
 
         # primera version
         # default=lambda self: self.env['res.partner.category'].search([('name', '=', 'Director')])
@@ -62,7 +62,7 @@ class Presupuesto(models.Model):
         string='Actores'
     )
 
-    categoria_actor_id = fields. (
+    categoria_actor_id = fields.Many2one(
         comodel_name='res.partner.category',
         string='Categoria Actor',
         default=lambda self: self.env.ref('peliculas.category_actor')
@@ -76,7 +76,7 @@ class Presupuesto(models.Model):
         self.fch_aprobado = fields.Datetime.now()
 
     def cancelar_presupuesto(self):
-        logger.info('Entro a la funcion cancelar presupuesto')
+        logger.info('Entro a la funcion aprobar presupuesto')
         self.state = 'cancelado'
 
     def unlink(self):
@@ -96,7 +96,7 @@ class Presupuesto(models.Model):
 
     def write(self, variables):
         logger.info('******** variables: {0}'.format(variables))
-        if 'clasificacion' in variables: #si clasificacion esta dentro de variables
+        if 'clasificacion' in variables:
             raise UserError('La clasificacion no se puede editar')
         return super(Presupuesto, self).write(variables)
 

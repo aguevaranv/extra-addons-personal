@@ -7,18 +7,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="action_open_genero" model="ir.actions.act_window">
-        <field name="name">Genero</field>
-        <field name="res_model">genero</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-
     <menuitem id="menu_principal" name="Peliculas"/>
     <menuitem id="menu_horizontal" name="Mis Modelos" parent="menu_principal"/>
-    <menuitem id="menu_horizontal1" name="Mis Pruebas" parent="menu_principal"/>
     <menuitem id="menu_vertical" name="Presupuesto" parent="menu_horizontal" action="action_open_presupuesto"/>
-    <menuitem id="menu_vertical1" name="Genero" parent="menu_horizontal1" action="action_open_genero"/>
-
 
 
 </odoo>

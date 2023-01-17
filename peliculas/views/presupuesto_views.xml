@@ -13,7 +13,7 @@
                     <field name="state" widget="statusbar" statusbar_visible="borrador,aprobado"/>
                 </header>
                 <div class="alert alert-info" role="alert" style="margin_bottom: 0px" attrs="{'invisible': [('dsc_clasificacion', '=', False)]}">
-                    <field name="dsc_clasificacion" readonly="1" force_save="1"/> <!-- Force if fuersa para que se actualice en la DB -->
+                    <field name="dsc_clasificacion" readonly="1" force_save="1"/>
                 </div>
 
                 <sheet>
@@ -29,7 +29,7 @@
                                         placeholder="Nombre de la pelicula"
                                         required="1"
                                         default_focus="1" class="oe_inline"/>
-                                <field name="puntuacion" widget="percentpie" string=" " style="padding-left: 10px;" class="oe_inline"/>
+                                <field name="puntuacion" widget="percentpie" string=" " style="padding-left: 10px;"/>
                                 <field name="puntuacion2" placeholder="Puntuacion de usuario"
                                         class="oe_edit_only oe_inline"
                                 />
