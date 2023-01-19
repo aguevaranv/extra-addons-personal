@@ -80,7 +80,7 @@
                             </group>
 
                         </page>
-                        <page string="Otra informacion">
+                        <page string="Otra informac ion">
                             <group>
                                 <field name="actor_ids"
                                        domain="[('category_id', 'in', [categoria_actor_id])]"
