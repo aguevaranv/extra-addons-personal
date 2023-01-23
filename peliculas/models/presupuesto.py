@@ -69,6 +69,21 @@ class Presupuesto(models.Model):
     )
     opinion = fields.Html(string='Opinion')
 
+    #relacion con los detalles relacion One2many
+    detalle_ids = fields.One2many(
+        comodel_name='presupuesto.detalle',
+        #relacion del detalle con la cabecera
+        inverse_name='presupuesto_id',
+        string='Detalles',
+    )
+
+    campos_ocultos = fields.Boolean(string='Campos ocultos')
+
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        default=lambda self: self.env.company.currency_id.id,
+    )
 
     def aprobar_presupuesto(self):
         logger.info('Entro a la funcion aprobar presupuesto')
@@ -122,3 +137,43 @@ class Presupuesto(models.Model):
         else:
             self.dsc_clasificacion = False
 
+class PresupuestoDetalle(models.Model):
+    _name = "presupuesto.detalle"
+    
+    presupuesto_id = fields.Many2one(
+        comodel_name='presupuesto',
+        string='Presupuesto',
+    )
+    name = fields.Many2one(
+        comodel_name='recurso.cinematografico', #debe listar los productos del modelo product.product
+        string='Recurso',
+    )
+    descripcion = fields.Char(string='Descripcion',related='name.descripcion')
+    contacto_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Contacto',
+        related='name.contacto_id'
+    )
+    imagen = fields.Binary(string='Imagen',related='name.imagen')
+    cantidad = fields.Float(string='Cantidad', default=1.0, digits=(16, 4))
+    precio = fields.Float(string='Precio', digits='Product Price')
+    importe = fields.Monetary(string='Importe')
+
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        related='presupuesto_id.currency_id'
+    )
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        if self.name:
+            self.precio = self.name.precio
+
+    
+    @api.onchange('cantidad', 'precio')
+    def _onchange_importe(self):
+        self.importe = self.cantidad * self.precio
+    
+     
+    
