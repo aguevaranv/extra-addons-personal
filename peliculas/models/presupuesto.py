@@ -11,6 +11,17 @@ class Presupuesto(models.Model):
     _name = "presupuesto"
     _inherit = ['image.mixin']
 
+    #
+    def _compute_total(self):
+        for rcord in self:
+            sub_total = 0
+            for linea in rcord.detalle_ids:
+                sub_total += linea.importe
+            rcord.base = sub_total
+            rcord.impuestos = sub_total * 0.12
+            rcord.total = sub_total * 1.12
+
+
     name = fields.Char(string='Pelicula')
     clasificacion = fields.Selection(selection=[
         ('G', 'G'), # Publico general
@@ -84,6 +95,11 @@ class Presupuesto(models.Model):
         string='Moneda',
         default=lambda self: self.env.company.currency_id.id,
     )
+
+    terminos = fields.Text(string='Terminos')
+    base = fields.Monetary(string='Base imponible', compute='_compute_total')
+    impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
+    total = fields.Monetary(string='Total', compute='_compute_total')
 
     def aprobar_presupuesto(self):
         logger.info('Entro a la funcion aprobar presupuesto')
@@ -164,6 +180,7 @@ class PresupuestoDetalle(models.Model):
         string='Moneda',
         related='presupuesto_id.currency_id'
     )
+    
 
     @api.onchange('name')
     def _onchange_name(self):
