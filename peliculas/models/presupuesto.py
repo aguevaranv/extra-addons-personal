@@ -11,7 +11,7 @@ class Presupuesto(models.Model):
     _name = "presupuesto"
     _inherit = ['image.mixin']
 
-    #
+    @api.depends('detalle_ids')
     def _compute_total(self):
         for rcord in self:
             sub_total = 0
