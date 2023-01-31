@@ -4,11 +4,6 @@ from odoo import fields, models, api
 
 
 class UpdateWizard(models.TransientModel):
-    _name = 'ModelName'
-    _description = 'ModelName'
-
-    
-):
     _name = "update.wizard"
 
     name = fields.Text(string='Nueva descripcion')
