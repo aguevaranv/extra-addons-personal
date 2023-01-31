@@ -1,0 +1,8 @@
+id          : acceso_presupuesto_usuario
+name        : acceso_presupuesto_usuario
+model_id:id : model_presupuesto
+group_id:id : group_pelicula_usuario
+perm_read   : 1
+perm_write  : 1
+perm_create : 1
+perm_unlik  : 1
