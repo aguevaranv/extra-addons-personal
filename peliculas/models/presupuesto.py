@@ -22,8 +22,8 @@ class Presupuesto(models.Model):
             rcord.total = sub_total * 1.12
 
 
-    name = fields.Char(string='Pelicula')
-    clasificacion = fields.Selection(selection=[
+    name = fields.Char(string='Pelicula') #-----campo caracter muestra el string en la vista, nombre principal
+    clasificacion = fields.Selection(selection=[ #-----combo box con valores seteados
         ('G', 'G'), # Publico general
         ('PG', 'PG'),  # Se recomienda la compania de un adulto
         ('PG-13', 'PG-13'),  # Mayores de 13 años
@@ -31,16 +31,16 @@ class Presupuesto(models.Model):
         ('NC-17', 'NC-17'),  # Mayores de 18
     ], string='clasificación')
     dsc_clasificacion = fields.Char(string = 'Descripcion clasificacion')
-    fch_estreno = fields.Date(string='Fecha estreno')
-    puntuacion = fields.Integer(string='Puntuación', related="puntuacion2")
-    puntuacion2 = fields.Integer(string='Puntuación')
-    active = fields.Boolean(string='Activo', default=True)
-    director_id = fields.Many2one(
+    fch_estreno = fields.Date(string='Fecha estreno') #-----campo de tipo fecha
+    puntuacion = fields.Integer(string='Puntuación', related="puntuacion2") #-----campo entero va ser oculto
+    puntuacion2 = fields.Integer(string='Puntuación') #-----campo entero visible
+    active = fields.Boolean(string='Activo', default=True) #-----campo boleano
+    director_id = fields.Many2one( #-----campo many2one, selecciona de la tabla res_partner y muestra la palabra Director
         comodel_name='res.partner',
         string='Director'
     )
 
-    categoria_director_id = fields.Many2one(
+    categoria_director_id = fields.Many2one( #-----campo many2one, utiliza el metodo serarch para comparar
         comodel_name='res.partner.category',
         string='Categoria Director',
         # segunda version
@@ -50,14 +50,14 @@ class Presupuesto(models.Model):
         # default=lambda self: self.env['res.partner.category'].search([('name', '=', 'Director')])
     )
 
-    genero_ids = fields.Many2many(
+    genero_ids = fields.Many2many( #-----campo many to many enlazado a un modelo
         comodel_name='genero',
         string='Género'
     )
     vista_general = fields.Text(string='Descripción')
     link_trailer = fields.Char(string='Trailer')
     es_libro = fields.Boolean(string='Version Libro')
-    libro = fields.Binary(string='Libro')
+    libro = fields.Binary(string='Libro') #-----campo binario para almacenar una foto
     libro_filename = fields.Char(string='Nombre del libro')
 
     state = fields.Selection(selection=[
@@ -65,7 +65,7 @@ class Presupuesto(models.Model):
         ('aprobado', 'Aprobado'),
         ('cancelado', 'Cancelado'),
     ], default='borrador', string='Estados', copy=False)
-    fch_aprobado = fields.Datetime(string="Fecha aprobado", copy=False)
+    fch_aprobado = fields.Datetime(string="Fecha aprobado", copy=False) #-----campo de usuario y fecha
     num_presupuesto = fields.Char(string='Numero presupuesto', copy=False)
     fch_creacion = fields.Datetime(string='Fecha creacion', copy=False, default=lambda self: fields.Datetime.now())
     actor_ids = fields.Many2many(
