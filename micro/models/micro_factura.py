@@ -2,6 +2,7 @@
 
 import logging
 
+from odoo.exceptions import ValidationError
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 
@@ -22,33 +23,39 @@ class Factura(models.Model):
     #         rcord.total = sub_total * 1.12
 
 
-    name = fields.Char(string='Factura') #-----campo caracter muestra el string en la vista, nombre principal
-    clasificacion = fields.Selection(selection=[ #-----combo box con valores seteados
-        ('G', 'G'), # Publico general
-        ('PG', 'PG'),  # Se recomienda la compania de un adulto
-        ('PG-13', 'PG-13'),  # Mayores de 13 años
-        ('R', 'R'),  # En compania de un adulto obligatorio
-        ('NC-17', 'NC-17'),  # Mayores de 18
-    ], string='clasificación')
-    dsc_clasificacion = fields.Char(string = 'Descripcion clasificacion')
-    fch_estreno = fields.Date(string='Fecha estreno') #-----campo de tipo fecha
-    puntuacion = fields.Integer(string='Puntuación', related="puntuacion2") #-----campo entero va ser oculto
-    puntuacion2 = fields.Integer(string='Puntuación') #-----campo entero visible
-    active = fields.Boolean(string='Activo', default=True) #-----campo boleano
-    director_id = fields.Many2one( #-----campo many2one, selecciona de la tabla res_partner y muestra la palabra Director
-        comodel_name='res.partner',
-        string='Director'
-    )
+    name = fields.Char(string="Factura No.", readonly=True, select=True, copy=False, default='Nueva') #-----campo caracter muestra el string en la vista, nombre principal
+    nombre = fields.Char(string='Nombres')
+    cedula = fields.Char(string='CI')
+    fch_factura = fields.Datetime(string='Fecha creacion', copy=False, default=lambda self: fields.Datetime.now())
 
-    categoria_director_id = fields.Many2one( #-----campo many2one, utiliza el metodo serarch para comparar
-        comodel_name='res.partner.category',
-        string='Categoria Director',
-        # segunda version
-        #default=lambda self: self.env.ref('peliculas.category_director') #hace referencia al id del record en /data/categoria.xml
+    
 
-        # primera version
-        default=lambda self: self.env['res.partner.category'].search([('name', '=', 'Director')])
-    )
+    # clasificacion = fields.Selection(selection=[ #-----combo box con valores seteados
+    #     ('G', 'G'), # Publico general
+    #     ('PG', 'PG'),  # Se recomienda la compania de un adulto
+    #     ('PG-13', 'PG-13'),  # Mayores de 13 años
+    #     ('R', 'R'),  # En compania de un adulto obligatorio
+    #     ('NC-17', 'NC-17'),  # Mayores de 18
+    # ], string='clasificación')
+    # dsc_clasificacion = fields.Char(string = 'Descripcion clasificacion')
+    # fch_estreno = fields.Date(string='Fecha estreno') #-----campo de tipo fecha
+    # puntuacion = fields.Integer(string='Puntuación', related="puntuacion2") #-----campo entero va ser oculto
+    # puntuacion2 = fields.Integer(string='Puntuación') #-----campo entero visible
+    # active = fields.Boolean(string='Activo', default=True) #-----campo boleano
+    # director_id = fields.Many2one( #-----campo many2one, selecciona de la tabla res_partner y muestra la palabra Director
+    #     comodel_name='res.partner',
+    #     string='Director'
+    # )
+
+    # categoria_director_id = fields.Many2one( #-----campo many2one, utiliza el metodo serarch para comparar
+    #     comodel_name='res.partner.category',
+    #     string='Categoria Director',
+    #     # segunda version
+    #     #default=lambda self: self.env.ref('peliculas.category_director') #hace referencia al id del record en /data/categoria.xml
+
+    #     # primera version
+    #     default=lambda self: self.env['res.partner.category'].search([('name', '=', 'Director')])
+    # )
 
     # genero_ids = fields.Many2many( #-----campo many to many enlazado a un modelo
     #     comodel_name='genero',
@@ -118,12 +125,12 @@ class Factura(models.Model):
             super(Factura, record).unlink()
 
     @api.model
-    def create(self, variables):
-        logger.info('******** variables: {0}'.format(variables))
-        sequence_obj = self.env['ir.sequence']
-        correlativo = sequence_obj.next_by_code('secuencia.micro.factura.peliculas')
-        variables['num_factura'] = correlativo
-        return super(Factura, self).create(variables)
+    def create(self, vals):
+        if vals.get('name', 'Nueva') == 'Nueva':
+            vals['name'] = self.env['ir.sequence'].next_by_code('secuencia.micro.factura') or 'New'
+            #raise ValidationError(vals['name'])
+        return super(Factura, self).create(vals)
+
 
     def write(self, variables):
         logger.info('******** variables: {0}'.format(variables))

@@ -17,7 +17,7 @@
         # 'security/security.xml',
         # 'security/ir.model.access.csv',
         # 'data/categoria.xml',
-        # 'data/secuencia.xml',
+        'data/micro_secuencia.xml',
         # 'wizard/update_wizard_views.xml',
         'views/micro_factura_view.xml',
         'views/menu.xml',
