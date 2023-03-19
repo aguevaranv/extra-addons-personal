@@ -1,0 +1,2 @@
+Modulo que tambien deben instalarse para funcionar
+Productos y tarifas (Product)  -> Ajustes/Tecnico/Estructura de bases de datos/Presicion decimal
