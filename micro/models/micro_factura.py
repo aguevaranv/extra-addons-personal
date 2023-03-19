@@ -12,15 +12,15 @@ class Factura(models.Model):
     _name = "micro.factura"
     _inherit = ['image.mixin']
 
-    # @api.depends('detalle_ids')
-    # def _compute_total(self):
-    #     for rcord in self:
-    #         sub_total = 0
-    #         for linea in rcord.detalle_ids:
-    #             sub_total += linea.importe
-    #         rcord.base = sub_total
-    #         rcord.impuestos = sub_total * 0.12
-    #         rcord.total = sub_total * 1.12
+    @api.depends('detalle_ids') #depends es para que la funcion se ejecute cada vez que cambie detalle_ids o se renderice la vista por compute
+    def _compute_total(self):
+        for rcord in self:
+            sub_total = 0
+            for linea in rcord.detalle_ids:
+                sub_total += linea.importe
+            rcord.base = sub_total
+            rcord.impuestos = 0
+            rcord.total = sub_total + rcord.impuestos 
 
 
     name = fields.Char(string="Factura No.", readonly=True, select=True, copy=False, default='Nueva') #-----campo caracter muestra el string en la vista, nombre principal
@@ -36,6 +36,15 @@ class Factura(models.Model):
         string='Detalles',
     )
     campos_ocultos = fields.Boolean(string='Campos ocultos')
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        default=lambda self: self.env.company.currency_id.id,
+    )
+    terminos = fields.Text(string='Terminos')
+    base = fields.Monetary(string='Base imponible', compute='_compute_total')
+    impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
+    total = fields.Monetary(string='Total', compute='_compute_total')
 
 
     def aprobar_factura(self):
@@ -110,13 +119,14 @@ class FacturaDetalle(models.Model):
     imagen = fields.Binary(string='Imagen',related='name.imagen')
     cantidad = fields.Float(string='Cantidad', default=1.0, digits=(16, 4))
     precio = fields.Float(string='Precio', digits='Product Price')
-    importe = fields.Float(string='Importe')#fields.Monetary(string='Importe')
+    importe = fields.Monetary(string='Importe') #depende de currency_id
 
-#     # currency_id = fields.Many2one(
-#     #     comodel_name='res.currency',
-#     #     string='Moneda',
-#     #     related='factura_id.currency_id'
-#     # )
+    #Para que funcione Monetary
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        related='factura_id.currency_id'
+    )
     
 
     @api.onchange('name')

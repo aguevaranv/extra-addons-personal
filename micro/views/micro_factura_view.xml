@@ -47,12 +47,12 @@
                                     <field name="contacto_id" attrs="{'column_invisible': [('parent.campos_ocultos', '=', False)]}"/>
                                     <field name="cantidad"/>
                                     <field name="precio"/>
-                                    <field name="importe" readonly="1" force_save="1"/>
-                                    <!-- <field name="currency_id" invisible="1"/> -->
+                                    <field name="importe" readonly="1" force_save="1"/> <!-- forse_save guarda un solo lectura en la base de datos -->
+                                    <field name="currency_id" invisible="1"/>
                                 </tree>
                             </field>
 
-                            <!-- <group col="6" class="mt-2 mt-md-0">
+                            <group col="6" class="mt-2 mt-md-0">
                                 <group colspan="4">
                                     <field name="terminos" nolabel="1" placeholder="Terminos y condiciones..."/>
                                 </group>
@@ -64,7 +64,7 @@
                                     </div>
                                     <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currenci_id'}"/>
                                 </group>
-                            </group> -->
+                            </group>
 
                         </page>
                     </notebook>

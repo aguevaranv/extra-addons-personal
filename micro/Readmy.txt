@@ -1,2 +1,19 @@
 Modulo que tambien deben instalarse para funcionar
 Productos y tarifas (Product)  -> Ajustes/Tecnico/Estructura de bases de datos/Presicion decimal
+
+Moneda
+Ajustes/Usuarios y Companias/Usuarios/Administrador/Extra Rights/Multimoneda -> True
+Se visualiza instalando el modulo de Facturación
+Configuración/Contabilidad/Monedas
+
+
+
+
+
+
+
+
+
+
+
+
