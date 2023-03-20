@@ -17,7 +17,6 @@
         <field name="padding">9</field>
         <!-- paso: aumenta de 1 en 1 -->
         <field name="number_increment">1</field>
-        <field name="number_next">1</field>
         <field name="company_id" eval="False"/>
     </record>
 

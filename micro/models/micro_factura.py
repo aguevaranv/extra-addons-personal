@@ -20,11 +20,15 @@ class Factura(models.Model):
                 sub_total += linea.importe
             rcord.base = sub_total
             rcord.impuestos = 0
-            rcord.total = sub_total + rcord.impuestos 
+            rcord.total = sub_total + rcord.impuestos
 
 
     name = fields.Char(string="Factura No.", readonly=True, select=True, copy=False, default='Nueva') #-----campo caracter muestra el string en la vista, nombre principal
-    nombre = fields.Char(string='Nombres')
+    nombre = fields.Many2one(
+        'res.partner', 
+        string='Cliente', 
+        #default=lambda self: self.env.user.employee_id,domain="[('company_id','=',reparto_id)]" 
+    )
     cedula = fields.Char(string='CI')
     fch_factura = fields.Datetime(string='Fecha creacion', copy=False, default=lambda self: fields.Datetime.now())
 
@@ -44,7 +48,21 @@ class Factura(models.Model):
     terminos = fields.Text(string='Terminos')
     base = fields.Monetary(string='Base imponible', compute='_compute_total')
     impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
-    total = fields.Monetary(string='Total', compute='_compute_total')
+    total = fields.Monetary(string='Total')
+    abono = fields.Monetary(string='Abono')
+    saldo = fields.Monetary(string='Saldo')
+
+    @api.onchange('total', 'abono')
+    def _onchange_saldo(self):
+        self.saldo = self.total - self.abono
+
+    @api.onchange('nombre')
+    def _onchange_nombre_cliente(self):
+        self.cedula = self.nombre.vat
+
+    @api.onchange('cedula')
+    def _onchange_cedula_cliente(self):
+        self.nombre = self.env['res.partner'].search([('vat','=',self.cedula)],limit=1)
 
 
     def aprobar_factura(self):
@@ -59,8 +77,8 @@ class Factura(models.Model):
     def unlink(self):
         logger.info('********Se disparo la funcion unlink')
         for record in self:
-            if record.state != 'cancelado':
-                raise UserError('Solo se eliminan registros con estado cancelado')
+            # if record.state != 'cancelado':
+            #     raise UserError('Solo se eliminan registros con estado cancelado')
             super(Factura, record).unlink()
 
     @api.model
@@ -82,22 +100,9 @@ class Factura(models.Model):
         default['name'] = self.name + ' (Copia)'
         default['puntuacion2'] = 1
         return super(Factura, self).copy(default)
+    
 
-    @api.onchange('clasificacion')
-    def _onchage_clasificacion(self):
-        if self.clasificacion:
-            if self.clasificacion == 'G':
-                self.dsc_clasificacion = 'Publico general'
-            if self.clasificacion == 'PG':
-                self.dsc_clasificacion = 'Se recomienda la compania de un adulto'
-            if self.clasificacion == 'PG-13':
-                self.dsc_clasificacion = 'Mayores de 13 años'
-            if self.clasificacion == 'R':
-                self.dsc_clasificacion = 'En compania de un adulto obligatorio'
-            if self.clasificacion == 'NC-17':
-                self.dsc_clasificacion = 'Mayores de 18'
-        else:
-            self.dsc_clasificacion = False
+    
 
 class FacturaDetalle(models.Model):
     _name = "micro.factura.detalle"
