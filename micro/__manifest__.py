@@ -19,7 +19,7 @@
         # 'data/categoria.xml',
         'data/micro_secuencia.xml',
         # 'wizard/update_wizard_views.xml',
-        'views/micro_factura_view.xml',
+        'views/micro_ticket_view.xml',
         'views/menu.xml',
     ],
 }

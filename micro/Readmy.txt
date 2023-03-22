@@ -3,7 +3,7 @@ Productos y tarifas (Product)  -> Ajustes/Tecnico/Estructura de bases de datos/P
 
 Moneda
 Ajustes/Usuarios y Companias/Usuarios/Administrador/Extra Rights/Multimoneda -> True
-Se visualiza instalando el modulo de Facturación
+Se visualiza instalando el modulo de Ticketción
 Configuración/Contabilidad/Monedas
 
 

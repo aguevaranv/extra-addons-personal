@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="micro_factura_view" model="ir.ui.view">
+    <record id="micro_ticket_view" model="ir.ui.view">
 
-        <field name="name">Vista formulario de facturas</field>
-        <field name="model">micro.factura</field>
+        <field name="name">Vista formulario de tickets</field>
+        <field name="model">micro.ticket</field>
         <field name="arch" type="xml">
             <form>
                 <header>
-
+                    <field name="state" widget="statusbar" />
                 </header>
-
+                    
                 <sheet>
                     <div class="oe_title">
 
@@ -19,7 +19,7 @@
                     <group>
                         <group colspan="2">
                             <h1 style="display: flex;">
-                                <p style="margin-right:10px">Factura No. </p>
+                                <p style="margin-right:10px">Ticket No. </p>
                                 <field name="name" readonly="1" />
                             </h1>
                         </group>
@@ -28,7 +28,7 @@
                                 default_focus="1" class="oe_inline" />
                             <field name="identificacion" placeholder="Cédula o RUC" required="1" default_focus="1"
                                 class="oe_inline" />
-                            <field name="fch_factura" readonly="1" />
+                            <field name="fch_ticket" readonly="1" />
                         </group>
                     </group>
 
@@ -61,7 +61,7 @@
                             <group col="6" class="mt-2 mt-md-0">
                                 <group colspan="4">
                                     <field name="terminos" nolabel="1"
-                                        placeholder="Terminos y condiciones..." />
+                                        placeholder="Detalles" />
                                 </group>
                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="base" widget="monetary"
@@ -102,15 +102,15 @@
         </field>
     </record>
 
-    <record id="micro_factura_view_tree" model="ir.ui.view">
+    <record id="micro_ticket_view_tree" model="ir.ui.view">
         <field name="name">Vista de lista presupuesto</field>
-        <field name="model">micro.factura</field>
+        <field name="model">micro.ticket</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
                 <field name="nombre" />
                 <field name="identificacion" />
-                <field name="fch_factura" />
+                <field name="fch_ticket" />
                 <field name="total" sum="importe_total"/>
                 <field name="saldo" sum="importe_saldo"/>
                 <!-- <field name="state" widget="badge" decoration-success="state == 'aprobado'"

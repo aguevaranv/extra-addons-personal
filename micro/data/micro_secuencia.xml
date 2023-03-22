@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="secuencia_micro_factura" model="ir.sequence">
+    <record id="secuencia_micro_ticket" model="ir.sequence">
     <!-- nombre de la secuencia -->
-        <field name="name">Secuencia para factura del sistema micro</field>
+        <field name="name">Secuencia para ticket del sistema micro</field>
         <!-- codigo de la secuencia, es estring -->
-        <field name="code">secuencia.micro.factura</field>
+        <field name="code">secuencia.micro.ticket</field>
         <!-- sin hueco -->
         <field name='active'>TRUE</field>
         <field name="implementation">no_gap</field>
