@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import re
 
 from odoo.exceptions import ValidationError
 from odoo import fields, models, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, Warning
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +30,8 @@ class Factura(models.Model):
         string='Cliente', 
         #default=lambda self: self.env.user.employee_id,domain="[('company_id','=',reparto_id)]" 
     )
-    cedula = fields.Char(string='CI')
-    fch_factura = fields.Datetime(string='Fecha creacion', copy=False, default=lambda self: fields.Datetime.now())
+    identificacion = fields.Char(string='ID', size=13)
+    fch_factura = fields.Datetime(string='Fecha creacion', copy=False)
 
     #relacion con los detalles relacion One2many
     detalle_ids = fields.One2many(
@@ -58,12 +59,23 @@ class Factura(models.Model):
 
     @api.onchange('nombre')
     def _onchange_nombre_cliente(self):
-        self.cedula = self.nombre.vat
+        self.identificacion = self.nombre.vat
+    
+    @api.onchange('identificacion')
+    def _onchange_id(self):
+        if self.identificacion:
+            if self.env['res.partner'].search([('vat','=',self.identificacion)],limit=1):
+                    self.nombre = self.env['res.partner'].search([('vat','=',self.identificacion)],limit=1)
+            else:
+                self.nombre = False
+        else:
+            self.nombre = False
 
-    @api.onchange('cedula')
-    def _onchange_cedula_cliente(self):
-        self.nombre = self.env['res.partner'].search([('vat','=',self.cedula)],limit=1)
-
+    @api.constrains('identificacion')
+    def _check_identificacion_cliente(self):
+        if self.identificacion:
+            if not re.match(r'^\d{10}',self.identificacion) and not re.match(r'^\d{13}',self.identificacion) or not self.identificacion.isdigit():
+                raise UserError('Error en identificación')
 
     def aprobar_factura(self):
         logger.info('Entro a la funcion aprobar factura')
@@ -85,6 +97,7 @@ class Factura(models.Model):
     def create(self, vals):
         if vals.get('name', 'Nueva') == 'Nueva':
             vals['name'] = self.env['ir.sequence'].next_by_code('secuencia.micro.factura') or 'New'
+            vals['fch_factura'] = fields.Datetime.now()
             #raise ValidationError(vals['name'])
         return super(Factura, self).create(vals)
 
