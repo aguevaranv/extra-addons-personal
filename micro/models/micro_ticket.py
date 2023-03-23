@@ -51,13 +51,23 @@ class Ticket(models.Model):
     impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
     total = fields.Monetary(string='Total')
     abono = fields.Monetary(string='Abono')
+    nuevo_abono = fields.Monetary(string='Abono')
     saldo = fields.Monetary(string='Saldo')
     seleccion_estado = [('borrador', 'Borrador'),('produccion', 'Producción'),('almacenado', 'Almacenado'),('entregado', 'Entregado')]
     state = fields.Selection(seleccion_estado, 'Estado Solicitud', readonly=True, default='borrador', tracking=True)
 
+    def retirar_trabajo(self):
+        for record in self:             
+            record.state = 'entregado'
+
     @api.onchange('total', 'abono')
     def _onchange_saldo(self):
         self.saldo = self.total - self.abono
+
+    @api.onchange('nuevo_abono')
+    def _onchange_nuevo_abono(self):
+        self.abono = self.abono + self.nuevo_abono
+        self.nuevo_abono = False
 
     @api.onchange('nombre')
     def _onchange_nombre_cliente(self):

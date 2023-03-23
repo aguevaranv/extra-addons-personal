@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="action_open_ticket" model="ir.actions.act_window">
+    <record id="action_open_ticket_por_retirar" model="ir.actions.act_window">
         <field name="name">Ticket</field>
         <field name="res_model">micro.ticket</field>
         <field name="view_mode">tree,form,kanban</field>
@@ -18,8 +18,7 @@
     <menuitem id="menu_horizontal_produccion" name="Producción" parent="menu_principal"/>
     <menuitem id="menu_horizontal_sistema" name="Sistema" parent="menu_principal"/>
     <menuitem id="menu_horizontal_reportes" name="Reportes" parent="menu_principal"/>
-    <menuitem id="menu_vertical_ticket" name="Ticket" parent="menu_horizontal_ventas" action="action_open_ticket"/>
-    <menuitem id="menu_vertical_micro_produccion" name="Por retirar" parent="menu_horizontal_produccion" action="action_open_ticket"/>
+    
     <menuitem id="menu_vertical_micro_servicio" name="Servicios" parent="menu_horizontal_sistema" action="action_open_micro_servicio"/>
 
 
