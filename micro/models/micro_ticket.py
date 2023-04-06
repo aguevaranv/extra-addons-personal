@@ -59,15 +59,23 @@ class Ticket(models.Model):
     def retirar_trabajo(self):
         for record in self:             
             record.state = 'entregado'
+    
+    def abonar(self):
+        for record in self:             
+            if record.nuevo_abono > record.saldo:
+                raise UserError('No se admiten valores superiores al saldo')
+            record.abono = self.abono + self.nuevo_abono
+            record.saldo = self.total - self.abono
+            record.nuevo_abono = False
 
     @api.onchange('total', 'abono')
     def _onchange_saldo(self):
         self.saldo = self.total - self.abono
 
-    @api.onchange('nuevo_abono')
-    def _onchange_nuevo_abono(self):
-        self.abono = self.abono + self.nuevo_abono
-        self.nuevo_abono = False
+    # @api.onchange('nuevo_abono')
+    # def _onchange_nuevo_abono(self):
+    #     self.abono = self.abono + self.nuevo_abono
+    #     self.nuevo_abono = False
 
     @api.onchange('nombre')
     def _onchange_nombre_cliente(self):
