@@ -8,6 +8,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!-- <button string="Cancelar" type="object" name="cancelar_presupuesto" states="produccion,almacenado"/> -->
+                    <button string="Popup" type="action" name="%(action_actualizar_abono_wizard)d" states="produccion,almacenado" />
                     <field name="state" widget="statusbar" />
                 </header>
 

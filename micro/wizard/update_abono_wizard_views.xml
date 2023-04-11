@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_wisard_form" model="ir.ui.view">
+        <field name="name">Vista formulario para popup update wizard</field>
+        <field name="model">update.abono.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="idFactura" />
+                        <field name="fch_Movimiento" />
+                        <field name="tipo" />
+                        <field name="valor" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Actualizar" class="oe_highlight" type="object" name="update_vista_general"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_actualizar_abono_wizard" model="ir.actions.act_window">
+        <field name="name">Actualizar abono</field>
+        <field name="res_model">update.abono.wizard</field>
+        <field name="view_mode">form</field>
+        <!-- abre una nueva ventana -->
+        <field name="target">new</field>
+    </record>
+</odoo>

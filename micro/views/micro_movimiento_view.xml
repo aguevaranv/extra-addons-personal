@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="micro_movimiento_view" model="ir.ui.view">
+
+        <field name="name">Vista formulario de Movimientos</field>
+        <field name="model">micro.movimiento</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="idFactura" />
+                        <field name="fch_Movimiento" />
+                        <field name="tipo" />
+                        <field name="valor" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="micro_movimiento_view_tree" model="ir.ui.view">
+        <field name="name">Vista de lista Movimiento</field>
+        <field name="model">micro.movimiento</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="idFactura" />
+                <field name="fch_Movimiento" />
+                <field name="tipo" />
+                <field name="valor" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_open_movimiento" model="ir.actions.act_window">
+        <field name="name">Movimiento</field>
+        <field name="res_model">micro.movimiento</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <menuitem id="menu_vertical_movimiento" name="Movimientos" parent="menu_horizontal_reportes" action="action_open_movimiento"/>
+
+</odoo>
