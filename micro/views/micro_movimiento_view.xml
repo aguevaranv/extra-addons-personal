@@ -40,6 +40,6 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
-    <menuitem id="menu_vertical_movimiento" name="Movimientos" parent="menu_horizontal_reportes" action="action_open_movimiento"/>
+    <!-- <menuitem id="menu_vertical_movimiento" name="Movimientos" parent="menu_horizontal_reportes" action="action_open_movimiento"/> -->
 
 </odoo>

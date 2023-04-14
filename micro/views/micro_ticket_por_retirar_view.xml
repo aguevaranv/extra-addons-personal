@@ -9,7 +9,7 @@
             <form>
                 <header>
                     <!-- <button string="Cancelar" type="object" name="cancelar_presupuesto" states="produccion,almacenado"/> -->
-                    <button string="Popup" type="action" name="%(action_actualizar_abono_wizard)d" states="produccion,almacenado" />
+                    <button string="Abonar" type="action" name="%(action_actualizar_abono_wizard)d" states="produccion,almacenado" />
                     <field name="state" widget="statusbar" />
                 </header>
 
@@ -126,8 +126,6 @@
         
         <field name="domain">[('state','!=', 'entregado')]</field>
     </record>
-
-
 
     <menuitem name="Tickets por retirar" action="action_micro_por_retirar" id="menu_action_micro_por_retirar" parent="menu_horizontal_produccion" sequence="20" />
 
