@@ -67,6 +67,15 @@ class Ticket(models.Model):
             record.abono = self.abono + self.nuevo_abono
             record.saldo = self.total - self.abono
             record.nuevo_abono = False
+            self.guardarMovimiento(self)
+
+    def guardarMovimiento(self):
+        if self.abono_pendiente > 0:
+            movimiento = self.env['micro_movimiento'].create({
+                'ticket_id': self.name,
+                'tipo': 'abono',
+                'valor': self.abono_pendiente,
+            })
 
     @api.onchange('total', 'abono')
     def _onchange_saldo(self):

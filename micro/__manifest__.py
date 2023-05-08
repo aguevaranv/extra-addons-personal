@@ -14,8 +14,8 @@
     Modulo para administracion de locales
     ''',
     'data': [
-        # 'security/security.xml',
-        # 'security/ir.model.access.csv',
+        'security/security.xml',
+        'security/ir.model.access.csv',
         # 'data/categoria.xml',
         'views/menu.xml',
         'data/micro_secuencia.xml',

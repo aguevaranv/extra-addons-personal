@@ -8,9 +8,9 @@ class MicroMovimiento(models.Model):
     _name = "micro.movimiento"
 
     name = fields.Char(string='Código', required=True, readonly=True, copy=False, default='New')
-    idFactura = fields.Many2one(
+    idTicket = fields.Many2one(
         'micro.ticket', 
-        string='Factura', 
+        string='Ticket', 
         #default=lambda self: self.env.user.employee_id,domain="[('company_id','=',reparto_id)]" 
     )
     fch_Movimiento = fields.Datetime(string='Fecha', default=fields.Datetime.now())

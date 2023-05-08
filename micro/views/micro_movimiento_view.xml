@@ -10,7 +10,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="idFactura" />
+                        <field name="idTicket" />
                         <field name="fch_Movimiento" />
                         <field name="tipo" />
                         <field name="valor" />
@@ -26,7 +26,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
-                <field name="idFactura" />
+                <field name="idTicket" />
                 <field name="fch_Movimiento" />
                 <field name="tipo" />
                 <field name="valor" />
@@ -40,6 +40,6 @@
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
-    <!-- <menuitem id="menu_vertical_movimiento" name="Movimientos" parent="menu_horizontal_reportes" action="action_open_movimiento"/> -->
+    <menuitem id="menu_vertical_movimiento" name="Movimientos" parent="menu_horizontal_reportes" action="action_open_movimiento"/>
 
 </odoo>

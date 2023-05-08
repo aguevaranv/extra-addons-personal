@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!-- Se crean las categorias padre e hijas -->
+    <!-- categoria padre, se graban en el modelo ir.module.category -->
+    <record id="module_category_micro" model="ir.module.category">
+        <field name="name">Micro</field> <!-- Titulo aparece como morado -->
+        <field name="sequence">1</field> <!-- Orden en que va a aparecer la categoria -->
+    </record>
+    <!-- categoria hijo, se graba en el mismo modelo que la del padre -->
+    <record id="module_category_micro_micro" model="ir.module.category">
+        <field name="name">Micro</field> <!-- Titulo  -->
+        <field name="sequence">1</field> <!-- secuencia de la lista -->
+        <field name="parent_id" ref="module_category_micro"/> <!-- Indico la categoria padre -->
+    </record>
+    <!-- creo grupos, se graban en el modelo res.groups -->
+    <record id="group_micro_usuario" model="res.groups">
+        <field name="name">Usuario: Puede crear tickets y cerrar caja</field> <!-- Nombre del grupo -->
+        <field name="category_id" ref="module_category_micro_micro"/> <!-- Indico la categoria con la cual esta asociado -->
+    </record>
+
+    <record id="group_micro_administrador" model="res.groups">
+        <field name="name">Administrador</field> 
+        <field name="category_id" ref="module_category_micro_micro"/>
+        <field name="implied_ids" eval="[(4, ref('group_micro_usuario'))]"/> <!-- para que al momento de instalar el modulo, 
+                                                                                utilice como default al grupo administrador al usuario 
+                                                                                con el codigo 4 creo una relacion con el grupo pelicula administrador
+                                                                                y el grupo pelicula usuario-->
+    </record>
+    <!-- Se debe colocar este xml en el manifest, hasta este punto todavia no le hemos dado permisos solo hemos creado categorias y grupos y los hemos relacionado -->
+    
+
+    
+</odoo>
