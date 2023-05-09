@@ -22,21 +22,21 @@
 
     <record id="secuencia_micro_movimiento" model="ir.sequence">
         <!-- nombre de la secuencia -->
-            <field name="name">Secuencia para movimiento del sistema micro</field>
-            <!-- codigo de la secuencia, es estring -->
-            <field name="code">secuencia.micro.movimiento</field>
-            <!-- sin hueco -->
-            <field name='active'>TRUE</field>
-            <field name="implementation">no_gap</field>
-            <!-- va al inicio de la secuencia -->
-            <field name="prefix"></field>
-            <!-- lo que va al final de la secuencia -->
-            <field name="suffix"></field>
-            <!-- tamaño de la secuencia, cantidad de numeros de la secuencia de numeros, los llena con 0 -->
-            <field name="padding">9</field>
-            <!-- paso: aumenta de 1 en 1 -->
-            <field name="number_increment">1</field>
-            <field name="company_id" eval="False"/>
-        </record>
+        <field name="name">Secuencia para movimiento del sistema micro</field>
+        <!-- codigo de la secuencia, es estring -->
+        <field name="code">secuencia.micro.movimiento</field>
+        <!-- sin hueco -->
+        <field name='active'>TRUE</field>
+        <field name="implementation">standard</field>
+        <!-- va al inicio de la secuencia -->
+        <field name="prefix"></field>
+        <!-- lo que va al final de la secuencia -->
+        <field name="suffix"></field>
+        <!-- tamaño de la secuencia, cantidad de numeros de la secuencia de numeros, los llena con 0 -->
+        <field name="padding">9</field>
+        <!-- paso: aumenta de 1 en 1 -->
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
 
 </odoo>
